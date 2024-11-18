@@ -1,0 +1,57 @@
+<mat-card>
+    <mat-card-header class="flex gap-3 items-center">
+        <h1 class="text-xl font-bold">List Tasks</h1>
+        <a [routerLink]="['/tasks/create']" class="flex items-center text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600 dark:focus:ring-blue-900">Create</a>
+    </mat-card-header>
+    
+    <mat-card-content>
+  <div class="p-5">
+    <mat-table [dataSource]="tasks" class="w-auto">
+      <ng-container matColumnDef="taskId">
+        <th mat-header-cell *matHeaderCellDef class="w-1/12">No.</th>
+        <td mat-cell *matCellDef="let element" class="w-1/12">{{ element.taskId }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef class="w-2/12">Title</th>
+        <td mat-cell *matCellDef="let element" class="w-2/12">{{ element.title }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef class="w-4/12">Description</th>
+        <td mat-cell *matCellDef="let element" class="w-4/12">{{ element.description }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="isCompleted">
+        <th mat-header-cell *matHeaderCellDef class="w-1/12">Is Completed</th>
+        <td mat-cell *matCellDef="let element" class="w-1/12">
+          <mat-checkbox [disabled]="true" [checked]="element.isCompleted"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef class="w-2/12">Due date</th>
+        <td mat-cell *matCellDef="let element" class="w-2/12">
+          {{ element.dueDate | date: 'dd/MM/yyyy' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="w-2/12">Actions</th>
+        <td mat-cell *matCellDef="let element" class="flex flex-row gap-3">
+          <a [routerLink]="['/tasks/detail', element.taskId]" class="btn btn-info">Detail</a>
+          <a [routerLink]="['/tasks/edit', element.taskId]" class="btn btn-primary">Edit</a>
+          <button (click)="deleteTask(element.taskId)" class="btn btn-danger">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="6">No data matching the filter</td>
+      </tr>
+    </mat-table>
+  </div>
+</mat-card-content>
+
+</mat-card>

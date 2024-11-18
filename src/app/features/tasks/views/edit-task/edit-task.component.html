@@ -1,0 +1,63 @@
+<mat-card appearance="outlined" class="p-4">
+  <mat-card-title>
+    <h1 class="text-xl font-bold mb-5">Edit a task</h1>
+  </mat-card-title>
+  <mat-card-content>
+    <div class="w-full h-full">
+      <form
+        [formGroup]="frmGroup"
+        class="w-full h-full flex flex-col gap-5"
+        (ngSubmit)="onFormSubmit()"
+      >
+        <mat-form-field [floatLabel]="'always'">
+          <mat-label>Title</mat-label>
+          <input
+            matInput
+            placeholder="Write the task title"
+            formControlName="title"
+            required
+            maxlength="30"
+          />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description" required></textarea>
+          <mat-error *ngIf="frmGroup.get('description')?.hasError('required')">
+            Description is required.
+          </mat-error>
+          <mat-error *ngIf="frmGroup.get('description')?.hasError('maxlength')">
+            Description cannot exceed 30 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="example-form-field">
+          <mat-label>Choose a due date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepicker"
+            formControlName="dueDate"
+            required
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="datepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepicker>
+            <mat-datepicker-actions>
+              <button mat-button matDatepickerCancel>Cancel</button>
+              <button mat-raised-button matDatepickerApply>Apply</button>
+            </mat-datepicker-actions>
+          </mat-datepicker>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isCompleted">
+          Mark this task as completed
+        </mat-checkbox>
+
+        <button mat-flat-button>Edit task</button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

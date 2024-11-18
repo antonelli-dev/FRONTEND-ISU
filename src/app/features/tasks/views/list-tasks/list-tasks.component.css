@@ -1,0 +1,7 @@
+:host {
+  display: block;
+}
+
+.mdc-data-table__cell::ng-deep {
+  border: none;
+}
